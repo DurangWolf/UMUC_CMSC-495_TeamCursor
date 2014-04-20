@@ -1,1 +1,3 @@
 This is a source file for test encryption.
+
+Just adding an extra line to test GitHub / Eclipse integration.

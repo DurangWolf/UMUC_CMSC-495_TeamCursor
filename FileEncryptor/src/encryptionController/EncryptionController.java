@@ -136,6 +136,6 @@ public class EncryptionController {
 	//for use during testing before a GUI is implemented.
 	public static void main(String[] args){
 		new Encryptor("Test.txt","mypassword");
-		new Decryptor("Test.txt","eeeeeeeeee");
+		new Decryptor("Test.txt","mypassword");
 	}
 }
