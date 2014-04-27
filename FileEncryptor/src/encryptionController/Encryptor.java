@@ -65,7 +65,43 @@ public class Encryptor {
 	
 	private void generateEncryptedData() throws Exception{
 		FileOutputStream outFileStream = new FileOutputStream(new File(this.fileName + ".tce"));
-		outFileStream.write(encData);
+		outFileStream.write(this.encData);
 		outFileStream.close();
+	}
+	
+	protected static boolean saveKeyData(String keyData){
+		boolean result = false;
+		byte[]	encData = null;
+		byte[]	decData = null;
+		
+		if(keyData != null){
+			try{
+				//Setup input to be encrypted
+				int blockSize = 8;
+				int paddedCount = blockSize - ((int)keyData.length() % blockSize);
+				int padded = (int)keyData.length() + paddedCount;
+				decData = new byte[padded];
+				for(int i = 0; i < keyData.length(); i++){
+					decData[i] = (byte)keyData.toCharArray()[i];
+				}
+			
+				//Save encrypted data
+				encData = new CipherGenerator("supersecretpassword", Mode.ENCRYPT).getCipher().doFinal(decData);
+				FileOutputStream outFileStream = new FileOutputStream(new File("kdb.tce"));
+				outFileStream.write(encData);
+				outFileStream.close();
+				
+				result = true;
+			}
+			catch(Exception e){
+				result = false;
+			}
+		}
+		else{
+			System.out.println("ERROR: Invalid input provided to saveKeyData.");
+		}
+		
+		
+		return result;
 	}
 }

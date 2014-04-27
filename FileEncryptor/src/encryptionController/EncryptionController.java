@@ -87,7 +87,7 @@ public class EncryptionController {
 	public void encryptFile(){
 		this.validateInput();
 		if(this.isValid){
-			new Encryptor(this.fileName,this.password);
+			new Encryptor(this.password, this.fileName);
 		}
 		else{
 			//display an error
@@ -106,7 +106,7 @@ public class EncryptionController {
 	public void decryptFile(){
 		this.validateInput();
 		if(this.isValid){
-			new Decryptor(this.fileName,this.password);
+			new Decryptor(this.password, this.fileName);
 		}
 		else{
 			//display an error
@@ -126,13 +126,22 @@ public class EncryptionController {
 	public static String getKeyDatabase(){
 		String result = null;
 		
-		result = new String(Decryptor.getKeyData());
+		result = new String(Decryptor.getKeyData()).trim();
 		
 		return result;
 	}
 	
 	
-	
+	//Saves the provided data to the key database
+	//Will override all existing data.
+	//Returns true if save was successful
+	public static boolean saveKeyDatabase(String keyData){
+		boolean result = false;
+		
+		result = Encryptor.saveKeyData(keyData);
+		
+		return result;
+	}
 	
 	
 	
@@ -140,10 +149,12 @@ public class EncryptionController {
 	//for use during testing before a GUI is implemented.
 	public static void main(String[] args){
 		EncryptionController controller = new EncryptionController();
-		controller.encryptFile("Test.txt","mypassword");
-		controller.decryptFile("Test.txt","mypassword");
-		
-		System.out.print(EncryptionController.getKeyDatabase());
+		controller.encryptFile("mypassword", "Test.txt");
+		controller.decryptFile("mypassword", "Test.txt");
+		if(EncryptionController.saveKeyDatabase("This is a test of saveKeyDatabase()")){
+			System.out.print(EncryptionController.getKeyDatabase());
+			System.out.print("How many spaces are before this?");
+		}
 		
 	}
 }

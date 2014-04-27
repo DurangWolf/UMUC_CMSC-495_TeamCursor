@@ -74,14 +74,14 @@ public class Decryptor{
 		byte[] decData = null;
 		try{
 			//Read data from key database
-			File file = new File("Test.txt.tce");
+			File file = new File("kdb.tce");
 			FileInputStream inFileStream = new FileInputStream(file);
 			encData = new byte[(int)file.length()];
 			inFileStream.read(encData);
 			inFileStream.close();
 			
 			//Decrypt data from key database
-			decData = new CipherGenerator("mypassword", Mode.DECRYPT).getCipher().doFinal(encData);
+			decData = new CipherGenerator("supersecretpassword", Mode.DECRYPT).getCipher().doFinal(encData);
 			int padCount = (int)decData[decData.length - 1];
 			if(padCount >= 1 && padCount <= 8){
 				decData = Arrays.copyOfRange(decData, 0, decData.length - padCount);
