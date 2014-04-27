@@ -34,7 +34,7 @@ public class Encryptor {
 	private byte[] encData;
 	
 	//Constructor
-	Encryptor(String inFileName, String inPassword){
+	Encryptor(String inPassword, String inFileName){
 		try {
 			this.fileName = inFileName;
 			this.password = inPassword;

@@ -20,8 +20,6 @@
 
 package encryptionController;
 
-import java.security.GeneralSecurityException;
-
 public class EncryptionController {
 	
 	//Variables
@@ -89,7 +87,7 @@ public class EncryptionController {
 	public void encryptFile(){
 		this.validateInput();
 		if(this.isValid){
-			//continue
+			new Encryptor(this.fileName,this.password);
 		}
 		else{
 			//display an error
@@ -108,7 +106,7 @@ public class EncryptionController {
 	public void decryptFile(){
 		this.validateInput();
 		if(this.isValid){
-			//continue
+			new Decryptor(this.fileName,this.password);
 		}
 		else{
 			//display an error
@@ -124,8 +122,14 @@ public class EncryptionController {
 	}
 	
 	
-	
-	
+	//Returns the keyDatabase as a string
+	public static String getKeyDatabase(){
+		String result = null;
+		
+		result = new String(Decryptor.getKeyData());
+		
+		return result;
+	}
 	
 	
 	
@@ -135,7 +139,11 @@ public class EncryptionController {
 	//main method that provides a command line interface
 	//for use during testing before a GUI is implemented.
 	public static void main(String[] args){
-		new Encryptor("Test.txt","mypassword");
-		new Decryptor("Test.txt","mypassword");
+		EncryptionController controller = new EncryptionController();
+		controller.encryptFile("Test.txt","mypassword");
+		controller.decryptFile("Test.txt","mypassword");
+		
+		System.out.print(EncryptionController.getKeyDatabase());
+		
 	}
 }
