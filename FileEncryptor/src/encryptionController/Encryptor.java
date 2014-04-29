@@ -22,6 +22,7 @@ package encryptionController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Map;
 
 public class Encryptor {
 	
@@ -69,36 +70,37 @@ public class Encryptor {
 		outFileStream.close();
 	}
 	
-	protected static boolean saveKeyData(String keyData){
+	protected static boolean saveKeyData(Map<String, String> keyData){
 		boolean result = false;
 		byte[]	encData = null;
 		byte[]	decData = null;
+		String	keyDataString = null;
 		
-		if(keyData != null){
-			try{
-				//Setup input to be encrypted
-				int blockSize = 8;
-				int paddedCount = blockSize - ((int)keyData.length() % blockSize);
-				int padded = (int)keyData.length() + paddedCount;
-				decData = new byte[padded];
-				for(int i = 0; i < keyData.length(); i++){
-					decData[i] = (byte)keyData.toCharArray()[i];
-				}
-			
-				//Save encrypted data
-				encData = new CipherGenerator("supersecretpassword", Mode.ENCRYPT).getCipher().doFinal(decData);
-				FileOutputStream outFileStream = new FileOutputStream(new File("kdb.tce"));
-				outFileStream.write(encData);
-				outFileStream.close();
-				
-				result = true;
-			}
-			catch(Exception e){
-				result = false;
-			}
+		//Copy keyData map to a String
+		for(Map.Entry<String, String> entry : keyData.entrySet()){
+			keyDataString = keyDataString + entry.getKey() + "," + entry.getValue() + "\n";
 		}
-		else{
-			System.out.println("ERROR: Invalid input provided to saveKeyData.");
+		
+		try{
+			//Setup input to be encrypted
+			int blockSize = 8;
+			int paddedCount = blockSize - ((int)keyDataString.length() % blockSize);
+			int padded = (int)keyDataString.length() + paddedCount;
+			decData = new byte[padded];
+			for(int i = 0; i < keyDataString.length(); i++){
+				decData[i] = (byte)keyDataString.toCharArray()[i];
+			}
+		
+			//Save encrypted data
+			encData = new CipherGenerator("supersecretpassword", Mode.ENCRYPT).getCipher().doFinal(decData);
+			FileOutputStream outFileStream = new FileOutputStream(new File("kdb.tce"));
+			outFileStream.write(encData);
+			outFileStream.close();
+			
+			result = true;
+		}
+		catch(Exception e){
+			result = false;
 		}
 		
 		

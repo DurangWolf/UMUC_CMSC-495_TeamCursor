@@ -20,6 +20,8 @@
 
 package encryptionController;
 
+import java.util.Map;
+
 public class EncryptionController {
 	
 	//Variables
@@ -135,7 +137,7 @@ public class EncryptionController {
 	//Saves the provided data to the key database
 	//Will override all existing data.
 	//Returns true if save was successful
-	public static boolean saveKeyDatabase(String keyData){
+	public static boolean saveKeyDatabase(Map<String, String> keyData){
 		boolean result = false;
 		
 		result = Encryptor.saveKeyData(keyData);
@@ -151,10 +153,10 @@ public class EncryptionController {
 		EncryptionController controller = new EncryptionController();
 		controller.encryptFile("mypassword", "Test.txt");
 		controller.decryptFile("mypassword", "Test.txt");
-		if(EncryptionController.saveKeyDatabase("This is a test of saveKeyDatabase()")){
-			System.out.print(EncryptionController.getKeyDatabase());
-			System.out.print("How many spaces are before this?");
-		}
+		//if(EncryptionController.saveKeyDatabase("This is a test of saveKeyDatabase()")){
+		//	System.out.print(EncryptionController.getKeyDatabase());
+		//	System.out.print("How many spaces are before this?");
+		//}
 		
 	}
 }
