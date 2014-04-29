@@ -4,7 +4,7 @@
 * @version 1.0
 **/
 
-package encryptionController;
+package keyManagementSystem;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.*;
+
+import encryptionController.EncryptionController;
 
 public class KeyManagement extends EncryptionController{
     
