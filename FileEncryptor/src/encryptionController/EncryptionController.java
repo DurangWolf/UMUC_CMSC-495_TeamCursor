@@ -70,7 +70,12 @@ public class EncryptionController {
 	public void processFile(){
 		this.validateInput();
 		if(this.isValid){
-			//continue
+			if(this.fileName.endsWith(".tce")){
+				this.decryptFile();
+			}
+			else{
+				this.encryptFile();
+			}
 		}
 		else{
 			//display an error
