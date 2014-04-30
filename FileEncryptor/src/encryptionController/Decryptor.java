@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Decryptor{
 	//User input
@@ -68,8 +70,8 @@ public class Decryptor{
 	
 	//Static method used to retrieve key data
 	//Returns char[] of key data or null if no key database is present
-	protected  static char[] getKeyData(){
-		char[] result = null;
+	protected  static Map<String, String> getKeyData(){
+		Map<String, String> result = new HashMap<String, String>();
 		byte[] encData = null;
 		byte[] decData = null;
 		try{
@@ -87,10 +89,33 @@ public class Decryptor{
 				decData = Arrays.copyOfRange(decData, 0, decData.length - padCount);
 			}
 			
-			//Convert data to chars
-			result = new char[decData.length];
-			for(int i = decData.length - 1; i >= 0; i--){
-				result[i] = (char)decData[i];
+			//Convert data to Map
+			String currentFile = null;
+			String currentPassword = null;
+			boolean onFile = true;
+			for(int i = 0; i < decData.length; i++){
+				//if currently reading a file path
+				if(onFile){
+					//if a comma is reached switch over to copy password
+					if((char)decData[i] == ','){
+						onFile = false;
+					}
+					//else add the current char to the end of the filepath
+					else{
+						currentFile = currentFile + (char)decData[i];
+					}
+				}
+				//else reading the password
+				else{
+					//if a new line or end of file is reached add file and password to map
+					if((char)decData[i] == '\n' || i == (decData.length - 1)){
+						result.put(currentFile.trim(), currentPassword.trim());
+					}
+					//else add current char to current password
+					else{
+						currentPassword = currentPassword + (char)decData[i];
+					}
+				}
 			}
 		}
 		catch(Exception e){

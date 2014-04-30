@@ -125,10 +125,10 @@ public class EncryptionController {
 	
 	
 	//Returns the keyDatabase as a string
-	public static String getKeyDatabase(){
-		String result = null;
+	public static Map<String, String> getKeyDatabase(){
+		Map<String, String> result = null;
 		
-		result = new String(Decryptor.getKeyData()).trim();
+		result = Decryptor.getKeyData();
 		
 		return result;
 	}
