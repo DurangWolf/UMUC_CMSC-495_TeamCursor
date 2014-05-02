@@ -90,8 +90,8 @@ public class Decryptor{
 			}
 			
 			//Convert data to Map
-			String currentFile = null;
-			String currentPassword = null;
+			String currentFile = "";
+			String currentPassword = "";
 			boolean onFile = true;
 			for(int i = 0; i < decData.length; i++){
 				//if currently reading a file path

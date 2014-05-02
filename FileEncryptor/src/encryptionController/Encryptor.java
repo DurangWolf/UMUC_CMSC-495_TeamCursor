@@ -74,7 +74,7 @@ public class Encryptor {
 		boolean result = false;
 		byte[]	encData = null;
 		byte[]	decData = null;
-		String	keyDataString = null;
+		String	keyDataString = "";
 		
 		//Copy keyData map to a String
 		for(Map.Entry<String, String> entry : keyData.entrySet()){

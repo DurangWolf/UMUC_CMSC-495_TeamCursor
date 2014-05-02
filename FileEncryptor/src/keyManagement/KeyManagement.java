@@ -4,8 +4,9 @@
 * @version 1.0
 **/
 
-package keyManagementSystem;
+package keyManagement;
 
+import encryptionController.EncryptionController;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.HashMap;
@@ -13,21 +14,19 @@ import java.util.List;
 import java.util.Map;
 import java.io.*;
 
-import encryptionController.EncryptionController;
-
-public class KeyManagement extends EncryptionController{
+public class KeyManagement{
     
     private String userKey;
     private String file;
     // create map to store
     Map<String, String> keyManagementMap = new HashMap<String, String>();
     //Send value for key to encryptionController
-    EncryptionController controller = new EncryptionController();
+    //EncryptionController controller = new EncryptionController();
     
-    KeyManagement(){
+    public KeyManagement(){
     }
     
-    KeyManagement(String file, String userKey){
+    public KeyManagement(String file, String userKey){
     	this.file = file;
     	this.userKey = userKey;
     
@@ -55,12 +54,15 @@ public class KeyManagement extends EncryptionController{
 
     // Put values into map
     keyManagementMap.put(this.file, this.userKey);
-    keyStore(this.file, this.userKey);
+    EncryptionController.saveKeyDatabase(keyManagementMap);
+    System.out.println("Original Key Map:\t" + keyManagementMap);
+    System.out.println("EC Returned Key Map:\t" + EncryptionController.getKeyDatabase().toString());
+    //keyStore(this.file, this.userKey);
     //keyManagementMap.put("User 2", keyValueTwo);
     //keyManagementMap.put("User 3", keyValueThree);
 	
     //Encrypt data
-    Encryptor e = new Encryptor(this.file, this.userKey);
+    
     }
 
 public void keyStore(String file, String userKey){
@@ -91,15 +93,22 @@ public void searchForValueFromKey(String userKey){
         //Check to see if map contains key
         if(keyManagementMap.containsKey(key)){
 
-	Decryptor d = new Decryptor(key, keyValues);
+	//Decryptor d = new Decryptor(key, keyValues);
 
         //Print keys and values to the console
-        //System.out.println("Key = " + key);
-        //System.out.println("Values = " + keyValues);
-        controller.decryptFile(key, keyValues);
+        System.out.println("Key = " + key);
+        System.out.println("Values = " + keyValues);
+        //controller.decryptFile(key, keyValues);
         }else{
             System.out.println("There are no matches for the entered key");
             }
         }    
     }
+
+public static void main (String[] args){
+	KeyManagement manager = new KeyManagement("FileName","Password");
 }
+
+}
+
+
