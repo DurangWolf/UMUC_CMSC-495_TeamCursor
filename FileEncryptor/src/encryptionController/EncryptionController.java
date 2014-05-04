@@ -156,8 +156,8 @@ public class EncryptionController {
 	//for use during testing before a GUI is implemented.
 	public static void main(String[] args){
 		EncryptionController controller = new EncryptionController();
-		controller.encryptFile("mypassword", "Test.txt");
-		controller.decryptFile("mypassword", "Test.txt");
+		//controller.encryptFile("mypassword", "Cherry Pie.mp3");
+		controller.decryptFile("mypassword", "Cherry Pie.mp3.tce");
 		//if(EncryptionController.saveKeyDatabase("This is a test of saveKeyDatabase()")){
 		//	System.out.print(EncryptionController.getKeyDatabase());
 		//	System.out.print("How many spaces are before this?");

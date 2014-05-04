@@ -39,7 +39,7 @@ public class Decryptor{
 	//Constructor
 	Decryptor(String inPassword, String inFileName){
 		try{
-			this.fileName = inFileName + ".tce";
+			this.fileName = inFileName;
 			this.password = inPassword;
 			this.prepareSourceData();
 			this.decData = new CipherGenerator(this.password, Mode.DECRYPT).getCipher().doFinal(this.encData);
@@ -63,7 +63,7 @@ public class Decryptor{
 		if(padCount >= 1 && padCount <= 8){
 			this.decData = Arrays.copyOfRange(decData, 0, decData.length - padCount);
 		}
-		FileOutputStream outFileStream = new FileOutputStream(new File(this.fileName + ".tcd"));
+		FileOutputStream outFileStream = new FileOutputStream(new File(this.fileName.substring(0, this.fileName.length() - 4)));
 		outFileStream.write(decData);
 		outFileStream.close();
 	}
